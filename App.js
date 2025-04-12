@@ -7,6 +7,7 @@ import WinnerModal from './components/WinnerModal';
 export default function App() {
   const [participants, setParticipants] = useState([]);
   const [winner, setWinner] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const addParticipant = (name) => {
     if (name.trim()) {
@@ -15,9 +16,29 @@ export default function App() {
   };
 
   const selectWinner = () => {
-    if (participants.length > 0) {
-      const randomIndex = Math.floor(Math.random() * participants.length);
-      setWinner(participants[randomIndex]);
+    let currentParticipants = [...participants];
+    
+    if (winner) {
+      currentParticipants = currentParticipants.filter(
+        participant => participant.id !== winner.id
+      );
+    }
+    
+    if (currentParticipants.length > 0) {
+      if (currentParticipants.length === 1) {
+        setWinner(currentParticipants[0]);
+        setParticipants([]);
+        setIsModalVisible(true);
+        alert('Este es el último ganador. No quedan más participantes.');
+      } else {
+        const randomIndex = Math.floor(Math.random() * currentParticipants.length);
+        setWinner(currentParticipants[randomIndex]);
+        setParticipants(currentParticipants);
+        setIsModalVisible(true);
+      }
+    } else {
+      alert('No quedan más participantes disponibles');
+      setWinner(null);
     }
   };
 
@@ -25,6 +46,11 @@ export default function App() {
     setParticipants([]);
     setWinner(null);
   };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
@@ -40,6 +66,14 @@ export default function App() {
         onResetRaffle={resetRaffle} 
       />
       
+      <WinnerModal 
+        visible={isModalVisible}
+        winner={winner}
+        onClose={closeModal}
+        participantsRemaining={participants.length}
+      />
+      
+      <View style={styles.footerSpacer} />
       <View style={styles.footer} />
     </SafeAreaView>
   );
@@ -48,45 +82,44 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#e6f2ff',
+    backgroundColor: '#f5f5f5',
   },
   content: {
     flex: 1,
     marginBottom: 10,  
   },
   header: {
-    backgroundColor: '#2a5c8d',
-    padding: 20,
-    paddingTop: 40,
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    backgroundColor: '#4287f5',
+    padding: 15,
+    paddingTop: 35,
+    borderBottomLeftRadius: 10,
+    borderBottomRightRadius: 10,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 6,
-    elevation: 8,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 4,
     marginBottom: 15,
   },
   headerTitle: {
     color: 'white',
-    fontSize: 24,
+    fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'center',
   },
   headerSubtitle: {
-    color: '#c1d9f0',
-    fontSize: 16,
+    color: '#e8f4ff',
+    fontSize: 14,
     textAlign: 'center',
     marginTop: 5,
   },
-  footerContainer: {
-    paddingTop: 10,  
-    backgroundColor: '#e6f2ff', 
+  footerSpacer: {
+    height: 20,
   },
   footer: {
-    height: 25,
-    backgroundColor: '#1a4b8c',
-    borderTopWidth: 2,
-    borderTopColor: '#3a6cad',
+    height: 20,
+    backgroundColor: '#4287f5',
+    borderTopWidth: 1,
+    borderTopColor: '#3a75d8',
   }
 });

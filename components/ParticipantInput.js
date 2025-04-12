@@ -14,7 +14,7 @@ const ParticipantInput = ({ onAddParticipant }) => {
       <TextInput
         style={styles.input}
         placeholder="Nombre del participante"
-        placeholderTextColor="#6b8cae"
+        placeholderTextColor="#888"
         value={name}
         onChangeText={setName}
       />
@@ -22,7 +22,7 @@ const ParticipantInput = ({ onAddParticipant }) => {
         <Button 
           title="Agregar" 
           onPress={handleAdd} 
-          color="#2a5c8d" 
+          color="#4287f5" 
         />
       </View>
     </View>
@@ -31,29 +31,23 @@ const ParticipantInput = ({ onAddParticipant }) => {
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 20,
-    backgroundColor: '#ffffff',
-    borderRadius: 10,
-    padding: 15,
-    shadowColor: '#2a5c8d',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
+    marginBottom: 15,
+    padding: 10,
+    backgroundColor: '#f8f8f8',
+    borderRadius: 5,
   },
   input: {
-    height: 45,
-    borderColor: '#a3c4e8',
+    height: 40,
+    borderColor: '#ccc',
     borderWidth: 1,
-    marginBottom: 15,
-    paddingHorizontal: 12,
-    borderRadius: 8,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    borderRadius: 4,
     fontSize: 16,
-    color: '#2a5c8d',
-    backgroundColor: '#f5f9ff',
+    backgroundColor: '#fff',
   },
   buttonContainer: {
-    borderRadius: 8,
+    borderRadius: 4,
     overflow: 'hidden',
   },
 });

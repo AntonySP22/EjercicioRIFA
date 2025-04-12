@@ -1,13 +1,9 @@
 import React from 'react';
-import { View, Text, FlatList, Button, StyleSheet, Modal } from 'react-native';
+import { View, Text, FlatList, Button, StyleSheet } from 'react-native';
 
 const ParticipantList = ({ participants, winner, onSelectWinner, onResetRaffle }) => {
   const handleSelectWinner = () => {
     onSelectWinner();
-    
-    if (participants.length > 0 && winner) {
-      alert(`Ganador seleccionado: ${winner.name}`);
-    }
   };
 
   const renderItem = ({ item }) => (
@@ -16,6 +12,9 @@ const ParticipantList = ({ participants, winner, onSelectWinner, onResetRaffle }
       winner && winner.id === item.id && styles.winnerItem
     ]}>
       <Text style={styles.itemText}>{item.name}</Text>
+      {winner && winner.id === item.id && (
+        <Text style={styles.winnerBadge}>GANADOR</Text>
+      )}
     </View>
   );
 
@@ -36,14 +35,14 @@ const ParticipantList = ({ participants, winner, onSelectWinner, onResetRaffle }
             title="Seleccionar ganador" 
             onPress={handleSelectWinner}
             disabled={participants.length === 0}
-            color="#2a5c8d"
+            color="#4287f5"
           />
         </View>
         <View style={styles.buttonWrapper}>
           <Button 
             title="Reiniciar rifa" 
             onPress={onResetRaffle} 
-            color="#e74c3c"
+            color="#7AC6D2"
           />
         </View>
       </View>
@@ -54,64 +53,46 @@ const ParticipantList = ({ participants, winner, onSelectWinner, onResetRaffle }
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: 15,
+    paddingHorizontal: 10,
   },
   item: {
-    padding: 15,
-    marginVertical: 6,
-    backgroundColor: '#f0f7ff',
-    borderRadius: 8,
+    padding: 12,
+    marginVertical: 5,
+    backgroundColor: '#f8f8f8',
+    borderRadius: 4,
     borderWidth: 1,
-    borderColor: '#c1d9f0',
+    borderColor: '#ddd',
   },
   winnerItem: {
-    backgroundColor: '#d4e6ff',
-    borderColor: '#2a5c8d',
-    borderWidth: 2,
+    backgroundColor: '#e8f4ff',
+    borderColor: '#4287f5',
+    borderWidth: 1,
   },
   itemText: {
     fontSize: 16,
-    color: '#2a5c8d',
+    color: '#333',
   },
   emptyText: {
     textAlign: 'center',
     marginTop: 20,
     fontSize: 16,
-    color: '#6b8cae',
+    color: '#888',
   },
   buttonsContainer: {
     marginTop: 20,
-    gap: 12,
+    marginBottom: 30,
+    gap: 10,
   },
   buttonWrapper: {
-    borderRadius: 8,
+    borderRadius: 4,
     overflow: 'hidden',
+    marginBottom: 5,
   },
-  modalContent: {
-    backgroundColor: '#e6f2ff',
-    padding: 22,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-    borderColor: '#2a5c8d',
-    borderWidth: 1,
-  },
-  modalTitle: {
-    fontSize: 22,
-    marginBottom: 12,
-    color: '#2a5c8d',
+  winnerBadge: {
+    fontSize: 14,
+    color: '#f44336',
     fontWeight: 'bold',
-  },
-  winnerText: {
-    fontSize: 26,
-    fontWeight: 'bold',
-    color: '#1a4b8c',
-    marginBottom: 25,
-  },
-  modalButton: {
-    width: '100%',
-    borderRadius: 8,
-    overflow: 'hidden',
+    marginTop: 4,
   },
 });
 
